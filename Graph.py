@@ -38,13 +38,22 @@ class graph:
                 unvisited.add(node)
 
         while end_node not in visited:
+            #Find the closest unvisited node (will find the start node at first)
             minDistNode = self.minDist(unvisited, distances)
+            
+            #Search through all of that node's neighboring nodes
             for i in range(len(self.graph_dict[minDistNode])):
+                #The following boolean may make it impossible for non-simple paths to be chosen as the shortest path.
+                #I will have to test this further.
+
+                #If that node has not been reached yet
                 if self.graph_dict[minDistNode][i][0] in unvisited:
                     neighbor = self.graph_dict[minDistNode][i][0]
                     neighbors_distance = self.graph_dict[minDistNode][i][1]
+                    #Update the distance from INF to the new distance between it and the connected node
                     distances[neighbor] = [minDistNode, neighbors_distance]
-
+                
+                #Node has been visited now
                 visited.add(minDistNode)
             unvisited.remove(minDistNode)
         
